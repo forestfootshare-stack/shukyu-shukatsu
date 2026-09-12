@@ -1,0 +1,25 @@
+# Netlify 設定
+# GitHub と連携すると、main ブランチへの push ごとに自動でビルド・再公開されます。
+# 公開URLは一度発行されたら変わりません。
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA のため、すべてのパスを index.html に返します（直接URLアクセス・リロードで404にしない）
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"

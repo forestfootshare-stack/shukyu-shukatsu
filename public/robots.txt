@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# 公開後、下記のドメイン部分を実際の公開URLに書き換えてください
+Sitemap: https://shukyu-shukatsu.example/sitemap.xml
