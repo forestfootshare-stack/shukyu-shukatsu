@@ -1,7 +1,29 @@
 import { Link } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import { Avatar, PitchLines, ArrowIcon } from "../components/Visual";
+import { useReveal } from "../components/Reveal";
 import { Crumbs, Empty } from "../components/UI";
+
+/* 競技歴タイムライン：スクロールで縦線が伸び、各項目が順に表示される（1回のみ） */
+function Timeline({ history }) {
+  const [ref, shown] = useReveal({ threshold: 0.12 });
+  return (
+    <div className={`timeline${shown ? " tl-in" : ""}`} ref={ref}>
+      {history.filter((h) => h.team.trim()).map((h, i) => (
+        <div key={i} className="tl-item">
+          <span className="tl-stage">{h.stage}</span>
+          <h4 className="tl-team">{h.team}</h4>
+          <div className="row-wrap" style={{ marginBottom: 8 }}>
+            {h.from && <span className="tag">{h.from} - {h.to || "在籍中"}</span>}
+            {h.position && <span className="tag tag-blue">{h.position}</span>}
+            {h.role && h.role !== "なし" && <span className="tag tag-green">{h.role}</span>}
+          </div>
+          {h.result && <p style={{ fontSize: 13.5, color: "var(--ink-2)" }}>{h.result}</p>}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function Block({ title, children }) {
   return (
@@ -84,20 +106,7 @@ export default function Profile() {
         {/* ---------- 競技歴タイムライン ---------- */}
         <div className="card card-pad" style={{ marginTop: 14 }}>
           <Block title="競技歴">
-            <div className="timeline">
-              {p.history.filter((h) => h.team.trim()).map((h, i) => (
-                <div key={i} className="tl-item">
-                  <span className="tl-stage">{h.stage}</span>
-                  <h4 className="tl-team">{h.team}</h4>
-                  <div className="row-wrap" style={{ marginBottom: 8 }}>
-                    {h.from && <span className="tag">{h.from} - {h.to || "在籍中"}</span>}
-                    {h.position && <span className="tag tag-blue">{h.position}</span>}
-                    {h.role && h.role !== "なし" && <span className="tag tag-green">{h.role}</span>}
-                  </div>
-                  {h.result && <p style={{ fontSize: 13.5, color: "var(--ink-2)" }}>{h.result}</p>}
-                </div>
-              ))}
-            </div>
+            <Timeline history={p.history} />
           </Block>
 
           {p.awards && (

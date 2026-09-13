@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import { Logo, Avatar, BellIcon, CheckIcon, LineIcon, ArrowIcon } from "./Visual";
-import Modal from "./Modal";
 
 export const LINE_URL = "https://lin.ee/xK4hg63";
 
@@ -204,55 +203,119 @@ function Footer() {
 }
 
 /* ================================================================
-   LINE 相談モーダル
+   相談モーダル
+   サービスの主要コンバージョンUIとして設計しています。
    ページ読み込み時点では LINE への通信は発生しません。
-   ユーザーがこのボタンを押した場合のみ遷移します。
+   ユーザーがCTAを押した場合のみ遷移します。
    ================================================================ */
-export function LineModal({ onClose }) {
-  const items = ["就活の進め方", "自己分析", "業界分析", "企業紹介", "面接対策"];
+
+/* アドバイザー写真の枠。
+   実写に差し替える場合は public/images/advisor.jpg を置いて、
+   この関数の中身を <img src="/images/advisor.jpg" alt="" /> に変えてください。 */
+function AdvisorVisual() {
   return (
-    <Modal onClose={onClose} labelledBy="line-modal-title" wide>
-      <div className="stack-20" style={{ display: "grid", gap: 20 }}>
-        <div>
-          <span className="row" style={{ gap: 10, marginBottom: 12 }}>
-            <span className="line-fab-ic"><LineIcon size={22} /></span>
-            <span className="tag tag-green">無料・選考ではありません</span>
-          </span>
-          <h2 id="line-modal-title" className="h-page" style={{ fontSize: 22 }}>
-            キャリアアドバイザーに無料で相談できます
-          </h2>
+    <span className="cs-photo-fig" aria-hidden="true">
+      <svg viewBox="0 0 244 620" preserveAspectRatio="xMidYMax slice">
+        <defs>
+          <linearGradient id="cs-g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#6ddca8" />
+            <stop offset="100%" stopColor="#14b16b" />
+          </linearGradient>
+          <linearGradient id="cs-g2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#1668e3" stopOpacity=".16" />
+            <stop offset="100%" stopColor="#1668e3" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <circle cx="122" cy="330" r="146" fill="url(#cs-g2)" />
+        <circle cx="122" cy="320" r="74" fill="url(#cs-g)" />
+        <path d="M-4 620c0-128 57-232 126-232s126 104 126 232z" fill="url(#cs-g)" />
+      </svg>
+    </span>
+  );
+}
+
+export function LineModal({ onClose }) {
+  const items = ["就活の進め方", "自己分析", "業界・企業選び", "企業紹介", "面接対策"];
+  const ref = useRef(null);
+
+  // Escape / 背景クリックで閉じる。開いている間は body のスクロールを止める。
+  useEffect(() => {
+    const prev = document.activeElement;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKey = (e) => {
+      if (e.key === "Escape") { onClose(); return; }
+      if (e.key !== "Tab" || !ref.current) return;
+      const f = ref.current.querySelectorAll('a[href], button:not([disabled])');
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+    document.addEventListener("keydown", onKey);
+    const t = setTimeout(() => ref.current?.focus(), 320);
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      clearTimeout(t);
+      if (prev instanceof HTMLElement) prev.focus();
+    };
+  }, [onClose]);
+
+  return (
+    <div className="cs-back" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="cs-modal" role="dialog" aria-modal="true" aria-labelledby="cs-title" ref={ref} tabIndex={-1}>
+        <button className="cs-x" onClick={onClose} aria-label="閉じる">×</button>
+
+        <div className="cs-grid">
+          <div className="cs-photo">
+            <AdvisorVisual />
+            <span className="cs-photo-cap">
+              <b>キャリアアドバイザー</b>
+              <small>FOREST FOOTBALL株式会社</small>
+            </span>
+          </div>
+
+          <div className="cs-body">
+            <span className="cs-eyebrow">CAREER SUPPORT</span>
+            <h2 id="cs-title" className="cs-title">
+              就活のこと、30分だけ<br />話してみませんか？
+            </h2>
+
+            <p className="cs-lead">
+              FOREST FOOTBALLのキャリアアドバイザーが、就活の進め方から自己分析、
+              企業選び、面接対策まで無料で相談に乗ります。
+              「まだ何も始めていない」という段階でも大丈夫です。
+            </p>
+
+            <div className="cs-meta">
+              <div><b>約30分</b><small>所要時間</small></div>
+              <div><b>相談無料</b><small>学生は費用なし</small></div>
+              <div><b>オンラインOK</b><small>どこからでも</small></div>
+            </div>
+
+            <ul className="cs-list">
+              {items.map((t) => (
+                <li key={t}><CheckIcon size={16} /> {t}</li>
+              ))}
+            </ul>
+
+            <div className="cs-cta">
+              <a className="btn btn-line btn-lg btn-block" href={LINE_URL} target="_blank" rel="noopener noreferrer">
+                <LineIcon /> LINEで無料相談を予約する
+              </a>
+              <button className="btn btn-ghost btn-block" onClick={onClose}>あとで相談する</button>
+            </div>
+
+            <p className="cs-safe">
+              選考ではありません。相談だけでもOKです。
+            </p>
+          </div>
         </div>
-
-        <p style={{ fontSize: 14, color: "var(--ink-2)", lineHeight: 1.85 }}>
-          就活をまだ始めていない方でも大丈夫です。何から始めればいいかわからない、自分に合う企業を知りたい、
-          自己分析を手伝ってほしい、業界について知りたい、面接対策をしたいなど、就活について気軽に相談できます。
-          企業の選考ではありません。
-        </p>
-
-        <ul className="stack-8" style={{ display: "grid", gap: 8 }}>
-          {items.map((t) => (
-            <li key={t} className="line-check"><CheckIcon /> {t}</li>
-          ))}
-        </ul>
-
-        <div className="meta-box">
-          <div><small>相談時間</small><b>約30分</b></div>
-          <div><small>料金</small><b>無料</b></div>
-          <div><small>形式</small><b>オンライン可</b></div>
-        </div>
-
-        <div style={{ display: "grid", gap: 10 }}>
-          <a className="btn btn-line btn-lg btn-block" href={LINE_URL} target="_blank" rel="noopener noreferrer">
-            <LineIcon /> 公式LINEで相談する
-          </a>
-          <button className="btn btn-ghost btn-block" onClick={onClose}>あとで相談する</button>
-        </div>
-
-        <p className="tiny" style={{ textAlign: "center" }}>
-          ボタンを押すと LINE アプリまたは LINE の Web ページが開きます。
-        </p>
       </div>
-    </Modal>
+    </div>
   );
 }
 
@@ -298,7 +361,7 @@ export default function Layout({ children }) {
     <>
       <a className="skip-link" href="#main">本文へスキップ</a>
       <Header onOpenLine={() => setLineOpen(true)} />
-      <main id="main">{children}</main>
+      <main id="main" key={loc.pathname} className="page-fade">{children}</main>
       <Footer />
       <LineFab onOpen={() => setLineOpen(true)} hidden={fabHidden} onHide={() => setFabHidden(true)} />
       {lineOpen && <LineModal onClose={() => setLineOpen(false)} />}

@@ -1,0 +1,134 @@
+/* ==================================================================
+   相談モーダル — サービスの主要コンバージョンUI
+   ================================================================== */
+
+.cs-back {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(10, 30, 50, .45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+  animation: csBack 240ms var(--ease-out) both;
+}
+@keyframes csBack { from { opacity: 0; } to { opacity: 1; } }
+
+.cs-modal {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(10, 30, 50, .3);
+  overflow: hidden;
+  margin: auto;
+  animation: csIn 280ms var(--ease-out) 40ms both;
+}
+@keyframes csIn {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+.cs-grid {
+  display: grid;
+  grid-template-columns: 244px 1fr;
+}
+
+/* --- 左：アドバイザー写真枠 -----------------------------------------
+   初版は差し替え前提のプレースホルダです。
+   実写に変える場合は public/images/advisor.jpg を置いて、
+   Layout.jsx の <AdvisorVisual /> を <img> に置き換えてください。 */
+.cs-photo {
+  position: relative;
+  background: linear-gradient(165deg, #e4f7ee 0%, #e8f1fd 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 22px 20px;
+  min-height: 380px;
+  overflow: hidden;
+}
+.cs-photo-fig { position: absolute; inset: 0; }
+.cs-photo-fig svg { width: 100%; height: 100%; }
+.cs-photo-cap {
+  position: relative;
+  background: rgba(255, 255, 255, .92);
+  border-radius: 10px;
+  padding: 11px 13px;
+  backdrop-filter: blur(6px);
+}
+.cs-photo-cap b { display: block; font-size: 12.5px; line-height: 1.5; }
+.cs-photo-cap small { display: block; font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+/* --- 右：本文 ----------------------------------------------------- */
+.cs-body { padding: 34px 34px 30px; }
+
+.cs-eyebrow {
+  font-family: var(--f-num);
+  font-size: 12px; font-weight: 600; letter-spacing: .18em;
+  color: var(--pitch); display: block; margin-bottom: 10px;
+}
+.cs-title {
+  font-size: 25px; line-height: 1.5; letter-spacing: -.01em;
+}
+.cs-lead {
+  font-size: 13.5px; line-height: 1.9; color: var(--ink-2); margin-top: 14px;
+}
+
+.cs-meta {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 8px;
+  overflow: hidden; margin: 20px 0;
+}
+.cs-meta div { background: var(--grey-bg); padding: 11px 6px; text-align: center; }
+.cs-meta b { display: block; font-size: 14px; font-weight: 700; line-height: 1.4; }
+.cs-meta small { font-size: 10.5px; color: var(--ink-3); }
+
+.cs-list { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 16px; margin-bottom: 22px; }
+.cs-list li { display: flex; align-items: center; gap: 8px; font-size: 13px; line-height: 1.6; }
+.cs-list svg { color: var(--pitch); flex-shrink: 0; }
+
+.cs-cta { display: grid; gap: 10px; }
+.cs-safe {
+  font-size: 11.5px; color: var(--ink-3); text-align: center; line-height: 1.7; margin-top: 12px;
+}
+
+.cs-modal:focus { outline: none; }
+
+.cs-x {
+  position: absolute; top: 14px; right: 14px; z-index: 3;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: none; background: rgba(255,255,255,.9); color: var(--ink-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; line-height: 1;
+  box-shadow: 0 2px 8px rgba(14,34,51,.12);
+  transition: background 180ms var(--ease), transform 140ms var(--ease);
+}
+.cs-x:hover { background: #fff; transform: scale(1.06); }
+.cs-x:active { transform: scale(.94); }
+
+/* --- タブレット・スマホ ------------------------------------------- */
+@media (max-width: 720px) {
+  .cs-back { padding: 16px 12px; align-items: flex-start; }
+  .cs-modal { max-width: calc(100vw - 24px); border-radius: 14px; }
+  .cs-grid { grid-template-columns: 1fr; }
+  /* スマホでは写真を小さくし、相談内容とCTAを優先する */
+  .cs-photo {
+    min-height: 0; height: 112px;
+    flex-direction: row; align-items: flex-end; justify-content: flex-start;
+    padding: 12px 14px;
+  }
+  .cs-photo-cap { padding: 8px 11px; }
+  .cs-body { padding: 22px 20px 26px; }
+  .cs-title { font-size: 21px; }
+  .cs-lead { font-size: 13px; margin-top: 12px; }
+  .cs-meta { margin: 16px 0; }
+  .cs-list { grid-template-columns: 1fr; gap: 8px; margin-bottom: 18px; }
+}
+@media (max-width: 380px) {
+  .cs-photo { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-back, .cs-modal { animation: none !important; }
+}

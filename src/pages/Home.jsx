@@ -6,6 +6,7 @@ import { interviews, events, teams } from "../data/content";
 import { PitchLines, Avatar, Thumb, CompanyLogo, BellIcon, ArrowIcon, LineIcon } from "../components/Visual";
 import { SectionHead, CompanyCard, InterviewCard, EventCard, SampleBadge, AuthGateModal } from "../components/UI";
 import { openLineModal } from "../components/Layout";
+import Reveal, { RevealGroup } from "../components/Reveal";
 
 export default function Home() {
   const { isAuthed } = useApp();
@@ -92,14 +93,15 @@ export default function Home() {
       {/* ============ 提携サークル・チーム ============ */}
       <section className="section section-grey">
         <div className="wrap">
-          <SectionHead
+          <Reveal><SectionHead
             en="FOOTBALL COMMUNITY"
             title="提携サークル・チーム"
             lead="大学の部活動・サークルと連携し、進路情報を蓄積していきます。以下は掲載イメージです。実際の提携団体は順次掲載予定です。"
-          />
+          /></Reveal>
           <div className="rail">
             {teams.map((t, i) => (
-              <div key={t.id} className="card team-card">
+              <Reveal key={t.id} delay={i * 60} className="card team-card">
+                <div>
                 <Thumb toneName={t.tone} seed={i} kind={i % 2 ? "pitch" : "arc"} ratio="16 / 10" label={t.area} />
                 <div className="team-body">
                   <div className="team-uni">{t.uni}</div>
@@ -109,7 +111,8 @@ export default function Home() {
                     <SampleBadge text="掲載イメージ" />
                   </div>
                 </div>
-              </div>
+                </div>
+              </Reveal>
             ))}
           </div>
           <p className="tiny" style={{ marginTop: 14 }}>
@@ -129,7 +132,7 @@ export default function Home() {
           />
 
           {/* ① 競技歴がプロフィールになる */}
-          <div className="feat">
+          <Reveal className="feat">
             <div>
               <span className="feat-n">01</span>
               <h3>競技歴が、そのままプロフィールになる</h3>
@@ -175,10 +178,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* ② スカウト */}
-          <div className="feat feat-rev">
+          <Reveal className="feat feat-rev">
             <div>
               <span className="feat-n">02</span>
               <h3>競技歴を見た企業から、スカウトが届く</h3>
@@ -225,10 +228,10 @@ export default function Home() {
                 ※ 表示しているのはサンプル企業からのスカウト例です。
               </p>
             </div>
-          </div>
+          </Reveal>
 
           {/* ③ 自分から探す */}
-          <div className="feat">
+          <Reveal className="feat">
             <div>
               <span className="feat-n">03</span>
               <h3>自分から企業を探して、直接応募できる</h3>
@@ -245,10 +248,10 @@ export default function Home() {
                 {companies.slice(0, 2).map((c) => <CompanyCard key={c.id} c={c} showFav={false} />)}
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* ④ 就活相談 */}
-          <div className="feat feat-rev">
+          <Reveal className="feat feat-rev">
             <div>
               <span className="feat-n">04</span>
               <h3>就活を、無料で相談できる</h3>
@@ -281,7 +284,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -293,9 +296,9 @@ export default function Home() {
             title="競技経験を評価する企業"
             action={<Link to="/companies" className="btn btn-ghost btn-sm">すべて見る <ArrowIcon /></Link>}
           />
-          <div className="grid-3">
+          <RevealGroup className="grid-3" step={70}>
             {companies.slice(0, 6).map((c) => <CompanyCard key={c.id} c={c} />)}
-          </div>
+          </RevealGroup>
         </div>
       </section>
 
@@ -307,9 +310,9 @@ export default function Home() {
             title="先輩たちの就活"
             action={<Link to="/interviews" className="btn btn-ghost btn-sm">すべて見る <ArrowIcon /></Link>}
           />
-          <div className="grid-3">
+          <RevealGroup className="grid-3" step={80}>
             {interviews.slice(0, 3).map((a, i) => <InterviewCard key={a.id} a={a} i={i} />)}
-          </div>
+          </RevealGroup>
         </div>
       </section>
 
@@ -322,9 +325,9 @@ export default function Home() {
             lead="企業の社員と一緒にプレーしてから話を聞く日を、定期的に開催しています。"
             action={<Link to="/events" className="btn btn-ghost btn-sm">すべて見る <ArrowIcon /></Link>}
           />
-          <div className="grid-3">
+          <RevealGroup className="grid-3" step={80}>
             {events.slice(0, 3).map((e, i) => <EventCard key={e.id} e={e} i={i} />)}
-          </div>
+          </RevealGroup>
         </div>
       </section>
 

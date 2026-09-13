@@ -72,6 +72,8 @@ export function CompanyCard({ c, showFav = true }) {
           <span key={t} className={`tag ${t.includes("サッカー") ? "tag-green" : t.includes("体育会") ? "tag-blue" : ""}`}>{t}</span>
         ))}
       </div>
+
+      <span className="co-more">企業を見る <ArrowIcon size={14} /></span>
     </Link>
   );
 }

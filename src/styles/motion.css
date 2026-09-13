@@ -1,0 +1,277 @@
+/* ==================================================================
+   Motion — マイクロインタラクション
+   ------------------------------------------------------------------
+   方針：「気づくか気づかないか程度だが、触ると質が高い」
+   bounce / 発光 / 常時動作 / 3D回転 は使いません。
+   ================================================================== */
+
+:root {
+  /* 自然な減速。行き過ぎて戻る動き（bounce）は含みません */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --ease-out: cubic-bezier(.16, .84, .44, 1);
+  --t-card: 280ms;
+}
+
+/* ------------------------------------------------------------------
+   1. スクロール表示
+------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 620ms var(--ease-out),
+    transform 620ms var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+/* アニメーション完了後は will-change を外す（スクロール負荷対策） */
+.reveal.in { will-change: auto; }
+
+/* グリッドの子に使うとき、ラッパーが高さを潰さないようにする */
+.reveal-item { display: contents; }
+@supports not (display: contents) {
+  .reveal-item { display: block; height: 100%; }
+}
+
+/* ------------------------------------------------------------------
+   2. ファーストビューの入場
+   キャッチ → 説明 → CTA → 実績 → プロフィールUI → スカウト通知
+   の順に、ごくわずかな時間差で表示します。
+------------------------------------------------------------------- */
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes heroCard {
+  from { opacity: 0; transform: translateY(22px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes scoutIn {
+  from { opacity: 0; transform: translateY(10px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero-copy h1,
+.hero-sub,
+.hero-cta,
+.hero-stats {
+  animation: heroIn 640ms var(--ease-out) both;
+}
+.hero-copy h1  { animation-delay: 60ms; }
+.hero-sub      { animation-delay: 150ms; }
+.hero-cta      { animation-delay: 240ms; }
+.hero-stats    { animation-delay: 330ms; }
+
+.hv-card {
+  animation: heroCard 720ms var(--ease-out) 200ms both;
+}
+/* スカウト通知はプロフィール表示のあとに遅れて出す。
+   「実際にいまスカウトが届いた」ように見せるための間です。 */
+.hv-scout {
+  animation: scoutIn 520ms var(--ease-out) 1050ms both;
+}
+
+/* ------------------------------------------------------------------
+   3. カード hover — 種類ごとに動きを変える
+------------------------------------------------------------------- */
+.card-link {
+  transition:
+    transform var(--t-card) var(--ease),
+    box-shadow var(--t-card) var(--ease),
+    border-color var(--t-card) var(--ease);
+}
+
+/* 企業カード：持ち上がり＋ロゴがわずかに拡大 */
+.co-card { position: relative; }
+.co-card .co-logo { transition: transform var(--t-card) var(--ease); }
+.card-link.co-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(14, 34, 51, .13);
+  border-color: var(--blue);
+}
+.card-link.co-card:hover .co-logo { transform: scale(1.05); }
+
+/* 企業カード hover 時に「企業を見る →」を出す。
+   クリックできることが直感的に分かるようにするため。 */
+.co-more {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-top: auto;
+  padding-top: 12px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 240ms var(--ease), transform 240ms var(--ease);
+}
+.card-link.co-card:hover .co-more { opacity: 1; transform: none; }
+.card-link.co-card:hover .co-more svg { transform: translateX(3px); }
+.co-more svg { transition: transform 240ms var(--ease); }
+/* タッチ端末では hover がないため、常に表示する */
+@media (hover: none) {
+  .co-more { opacity: 1; transform: none; }
+}
+
+/* 記事・イベント・チーム：画像をゆっくり拡大 */
+.thumb { overflow: hidden; }
+.thumb svg { transition: transform 480ms var(--ease); transform-origin: center; }
+.card-link.art-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(14,34,51,.13); }
+.card-link.art-card:hover .thumb svg { transform: scale(1.035); }
+.card-link.art-card:hover .art-title { color: var(--blue); }
+.art-title { transition: color 200ms var(--ease); }
+
+.team-card { transition: transform var(--t-card) var(--ease), box-shadow var(--t-card) var(--ease); }
+.team-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.team-card:hover .thumb svg { transform: scale(1.03); }
+
+/* スカウトカード：控えめに */
+.card-link.scout-card:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(14,34,51,.11); }
+
+/* ------------------------------------------------------------------
+   4. ボタン
+------------------------------------------------------------------- */
+.btn {
+  transition:
+    background-color 180ms var(--ease),
+    border-color 180ms var(--ease),
+    color 180ms var(--ease),
+    transform 140ms var(--ease),
+    box-shadow 180ms var(--ease);
+}
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:active:not(:disabled) { transform: translateY(0) scale(.98); transition-duration: 80ms; }
+
+.btn-primary:hover:not(:disabled) { box-shadow: 0 6px 18px rgba(22, 104, 227, .26); }
+.btn-line:hover:not(:disabled)    { box-shadow: 0 6px 18px rgba(6, 199, 85, .28); }
+.btn-green:hover:not(:disabled)   { box-shadow: 0 6px 18px rgba(20, 177, 107, .26); }
+
+/* 矢印付きボタンは矢印だけ右へ */
+.btn svg { transition: transform 220ms var(--ease); }
+.btn:hover:not(:disabled) svg:last-child { transform: translateX(3px); }
+/* 「戻る」系は左へ */
+.btn:hover:not(:disabled) svg:first-child[style*="180deg"] { transform: translateX(-3px) rotate(180deg); }
+
+.link-blue svg { transition: transform 220ms var(--ease); }
+.link-blue:hover svg { transform: translateX(3px); }
+
+/* チップ・お気に入り */
+.chip { transition: all 150ms var(--ease); }
+.chip:active { transform: scale(.97); }
+.fav-btn { transition: color 180ms var(--ease), border-color 180ms var(--ease), background 180ms var(--ease), transform 140ms var(--ease); }
+.fav-btn:active { transform: scale(.92); }
+
+/* ------------------------------------------------------------------
+   5. ページ遷移
+------------------------------------------------------------------- */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.page-fade { animation: pageIn 220ms var(--ease-out) both; }
+
+/* ------------------------------------------------------------------
+   6. 競技歴タイムライン — 縦線が上から下へ伸び、各項目が順に出る
+------------------------------------------------------------------- */
+.timeline::before {
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 900ms var(--ease-out);
+}
+.timeline.tl-in::before { transform: scaleY(1); }
+
+.timeline .tl-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
+}
+.timeline.tl-in .tl-item { opacity: 1; transform: none; }
+.timeline.tl-in .tl-item:nth-child(1) { transition-delay: 220ms; }
+.timeline.tl-in .tl-item:nth-child(2) { transition-delay: 360ms; }
+.timeline.tl-in .tl-item:nth-child(3) { transition-delay: 500ms; }
+.timeline.tl-in .tl-item:nth-child(4) { transition-delay: 640ms; }
+.timeline.tl-in .tl-item:nth-child(n+5) { transition-delay: 760ms; }
+
+.tl-item::before { transition: transform 320ms var(--ease); }
+.timeline.tl-in .tl-item::before { transform: scale(1); }
+.timeline .tl-item::before { transform: scale(.4); }
+
+/* TOPの説明用ミニタイムラインも同様に */
+.mini-tl .mini-tl-item {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out);
+}
+.reveal.in .mini-tl .mini-tl-item { opacity: 1; transform: none; }
+.reveal.in .mini-tl .mini-tl-item:nth-child(1) { transition-delay: 180ms; }
+.reveal.in .mini-tl .mini-tl-item:nth-child(2) { transition-delay: 300ms; }
+.reveal.in .mini-tl .mini-tl-item:nth-child(3) { transition-delay: 420ms; }
+.reveal.in .mini-tl .mini-tl-item:nth-child(4) { transition-delay: 540ms; }
+
+/* ------------------------------------------------------------------
+   7. スカウトUI — 企業A → 少し遅れて企業B
+------------------------------------------------------------------- */
+.scout-demo {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
+}
+.reveal.in .scout-demo:nth-of-type(1) { opacity: 1; transform: none; transition-delay: 120ms; }
+.reveal.in .scout-demo:nth-of-type(2) { opacity: 1; transform: none; transition-delay: 520ms; }
+
+/* 小さな未読ドットのみ。ベルは動かさない。 */
+.scout-demo .nd {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--amber); flex-shrink: 0; margin-top: 6px;
+}
+
+/* ------------------------------------------------------------------
+   8. LINE 固定CTA
+------------------------------------------------------------------- */
+.line-fab {
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), border-color 220ms var(--ease);
+}
+@media (min-width: 721px) {
+  .line-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 44px rgba(14, 34, 51, .2);
+    border-color: #06c755;
+  }
+}
+.line-fab-ic { transition: transform 220ms var(--ease); }
+.line-fab:hover .line-fab-ic { transform: scale(1.06); }
+
+/* ------------------------------------------------------------------
+   9. ヘッダー・ナビ
+------------------------------------------------------------------- */
+.nav a::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: var(--blue); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 260ms var(--ease);
+}
+.nav a:hover::after { transform: scaleX(1); }
+.nav a.on::after { transform: scaleX(1); }
+
+.icon-btn, .user-btn { transition: background 180ms var(--ease), transform 140ms var(--ease); }
+.icon-btn:active, .user-btn:active { transform: scale(.96); }
+
+/* ------------------------------------------------------------------
+   10. reduced motion — すべて無効化
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal.in { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .hero-copy h1, .hero-sub, .hero-cta, .hero-stats, .hv-card, .hv-scout,
+  .page-fade { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .timeline::before { transform: scaleY(1) !important; }
+  .timeline .tl-item, .mini-tl .mini-tl-item, .scout-demo {
+    opacity: 1 !important; transform: none !important; transition: none !important;
+  }
+  .timeline .tl-item::before { transform: scale(1) !important; }
+  .btn:hover, .card-link:hover, .line-fab:hover { transform: none !important; }
+}
