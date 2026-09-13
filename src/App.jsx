@@ -12,7 +12,7 @@ import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
 import { Scouts, ScoutDetail, Applications, Favorites, Settings } from "./pages/MyPages";
 import { Interviews, InterviewDetail, Events, EventDetail } from "./pages/Content";
-import { About, Consult, Terms, Privacy, Contact } from "./pages/Static";
+import { About, Consult, Terms, Privacy, Contact, ForCompanies } from "./pages/Static";
 import NotFound from "./pages/NotFound";
 
 /* ログインが必要なページのガード。
@@ -40,6 +40,7 @@ export default function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/consult" element={<Consult />} />
+        <Route path="/for-companies" element={<ForCompanies />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/contact" element={<Contact />} />

@@ -460,3 +460,141 @@ export function Contact() {
     </div>
   );
 }
+
+/* ================= 採用担当者の方へ ================= */
+export function ForCompanies() {
+  const reasons = [
+    {
+      t: "長期間、同じ目標に取り組んできた",
+      d: "多くが小学生から10年以上、同じ競技を続けています。課題を設定して改善を回す習慣が、練習という形で身についています。",
+    },
+    {
+      t: "結果が出ない時期の過ごし方を知っている",
+      d: "レギュラーを外れる、怪我で離脱する、勝てない時期が続く。そうした局面をくぐってきた経験は、入社後の踏ん張りに直結します。",
+    },
+    {
+      t: "役割の変化に対応してきた",
+      d: "ポジション転向、学年による役割の変化、キャプテンとしての立ち回り。配属後のフィットを見るうえで参考になる材料が揃っています。",
+    },
+  ];
+
+  const features = [
+    {
+      t: "競技プロフィールから学生を見られる",
+      d: "小学校から大学までの所属チーム、ポジション、役職、大会実績、自己PR、希望条件が一覧で確認できます。履歴書の一行では見えない部分が最初から揃っています。",
+    },
+    {
+      t: "学生から直接応募が届く",
+      d: "貴社のページに「スポーツ経験者を評価するポイント」を掲載できます。何を見ているかを先に伝えることで、納得感のある応募が集まります。",
+    },
+    {
+      t: "学生へ直接スカウトを送れる",
+      d: "競技歴や希望業界から学生を探して、直接メッセージを送れます。※スカウト送信機能は順次提供予定です。",
+    },
+    {
+      t: "就活フットサルに参加できる",
+      d: "学生と一緒にプレーしてから話す場を定期開催しています。説明会より前の段階で、相互理解を作れます。",
+    },
+  ];
+
+  const flow = [
+    { t: "お問い合わせ", d: "下のフォームからご連絡ください。3営業日以内にご返信します。" },
+    { t: "オンラインでのご説明", d: "サービス概要と、登録学生の傾向についてご説明します。30分程度です。" },
+    { t: "掲載内容のご相談", d: "事業内容、カルチャー、求める人物像、競技経験のどこを評価するかを伺います。" },
+    { t: "掲載開始", d: "ページを作成し、公開します。掲載後の内容変更も承ります。" },
+  ];
+
+  return (
+    <div className="page">
+      <div className="wrap wrap-narrow">
+        <Crumbs items={[{ label: "採用担当者の方へ" }]} />
+
+        <div className="consult-hero" style={{ background: "linear-gradient(160deg,#e8f1fd 0%,#f5f7f9 100%)" }}>
+          <PitchLines opacity={0.45} />
+          <div style={{ position: "relative" }}>
+            <span className="eyebrow">FOR COMPANIES</span>
+            <h1 className="h-page" style={{ fontSize: "clamp(23px,4.6vw,32px)" }}>
+              サッカー・フットサル経験者を<br />採用したい企業の方へ
+            </h1>
+            <p className="lead" style={{ marginTop: 16 }}>
+              蹴球就活は、競技経験者に特化した新卒就活サービスです。
+              競技歴・役職・大会実績がプロフィールとして登録されているため、
+              体育会採用で見たい情報が最初から揃っています。
+            </p>
+            <div className="row" style={{ gap: 10, marginTop: 24, flexWrap: "wrap" }}>
+              <Link to="/contact" className="btn btn-primary btn-lg">掲載について問い合わせる</Link>
+              <Link to="/companies" className="btn btn-ghost btn-lg">掲載イメージを見る</Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="block" style={{ marginTop: 40 }}>
+          <h3>なぜ競技経験者なのか</h3>
+          <div style={{ marginTop: 8 }}>
+            {reasons.map((r, i) => (
+              <div key={r.t} className="flow-step">
+                <span className="flow-num">{i + 1}</span>
+                <div>
+                  <b style={{ fontSize: 15 }}>{r.t}</b>
+                  <p style={{ fontSize: 13.5, color: "var(--ink-2)", marginTop: 4, lineHeight: 1.85 }}>{r.d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="block">
+          <h3>蹴球就活でできること</h3>
+          <div className="grid-2" style={{ marginTop: 10, gap: 14 }}>
+            {features.map((f) => (
+              <div key={f.t} className="card card-pad">
+                <b style={{ fontSize: 14.5, display: "block", marginBottom: 8, lineHeight: 1.5 }}>{f.t}</b>
+                <p style={{ fontSize: 13, color: "var(--ink-2)", lineHeight: 1.85 }}>{f.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="block">
+          <h3>掲載について</h3>
+          <p>
+            初期掲載企業として約150社を想定しており、立ち上げ期の掲載料は無料を予定しています。
+            将来的に学生データベースの検索、スカウト送信、イベント参加などを有料機能として整備していく方針ですが、
+            現時点で掲載にあたって費用は発生しません。
+          </p>
+          <div className="notice" style={{ marginTop: 16 }}>
+            現在サイトに掲載している企業はすべて初版用のサンプルです。
+            実在する企業との提携を示すものではありません。
+          </div>
+        </div>
+
+        <div className="block">
+          <h3>掲載までの流れ</h3>
+          <div style={{ marginTop: 8 }}>
+            {flow.map((f, i) => (
+              <div key={f.t} className="flow-step">
+                <span className="flow-num">{i + 1}</span>
+                <div>
+                  <b style={{ fontSize: 15 }}>{f.t}</b>
+                  <p style={{ fontSize: 13.5, color: "var(--ink-2)", marginTop: 4, lineHeight: 1.85 }}>{f.d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="card card-pad" style={{ marginTop: 36, textAlign: "center" }}>
+          <h2 style={{ fontSize: 19, marginBottom: 10 }}>まずはご相談ください</h2>
+          <p className="lead" style={{ margin: "0 auto 22px", fontSize: 14 }}>
+            採用課題やご希望の職種を伺ったうえで、掲載内容をご提案します。
+            お問い合わせ種別から「企業掲載について」をお選びください。
+          </p>
+          <Link to="/contact" className="btn btn-primary btn-lg">掲載について問い合わせる</Link>
+          <p className="tiny" style={{ marginTop: 18 }}>
+            運営：FOREST FOOTBALL株式会社
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}

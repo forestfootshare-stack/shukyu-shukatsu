@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import { companies } from "../data/companies";
 import { interviews, events, teams } from "../data/content";
-import { PitchLines, Avatar, Thumb, CompanyLogo, BellIcon, ArrowIcon, LineIcon } from "../components/Visual";
+import { PitchLines, Avatar, Thumb, CompanyLogo, BellIcon, ArrowIcon, LineIcon, CheckIcon } from "../components/Visual";
 import { SectionHead, CompanyCard, InterviewCard, EventCard, SampleBadge, AuthGateModal } from "../components/UI";
 import { openLineModal } from "../components/Layout";
 import Reveal, { RevealGroup } from "../components/Reveal";
@@ -349,6 +349,71 @@ export default function Home() {
               <LineIcon /> 就活について相談する
             </button>
           </div>
+        </div>
+      </section>
+
+
+      {/* ============ 採用担当者向け ============ */}
+      <section className="section">
+        <div className="wrap">
+          <Reveal className="biz-band">
+            <div className="biz-copy">
+              <span className="biz-eyebrow">採用担当者さまへ</span>
+              <h2 className="biz-title">
+                競技歴から、自社に合う学生を<br />見つけられます。
+              </h2>
+
+              <div className="biz-feats">
+                <div>
+                  <b><CheckIcon size={15} /> 掲載無料</b>
+                  <small>立ち上げ期につき、掲載にあたって費用はかかりません</small>
+                </div>
+                <div>
+                  <b><BellIcon size={15} /> スカウト</b>
+                  <small>競技歴や希望条件から学生を探して直接連絡できます</small>
+                </div>
+                <div>
+                  <b><ArrowIcon size={15} /> 就活フットサル</b>
+                  <small>一緒にプレーしてから話す場を定期開催しています</small>
+                </div>
+              </div>
+
+              <div className="biz-cta">
+                <Link to="/for-companies" className="btn btn-primary">掲載について知る</Link>
+                <Link to="/contact" className="btn btn-ghost">お問い合わせ</Link>
+              </div>
+            </div>
+
+            <div className="biz-visual">
+              <PitchLines opacity={0.5} />
+              <div className="biz-mock">
+                <div className="biz-mock-head">
+                  <Avatar size={40} toneName="blue" radius="9px" />
+                  <div>
+                    <b>大森 悠生</b>
+                    <small>SAMPLE大学 / 2028年卒</small>
+                  </div>
+                </div>
+                <div className="biz-mock-kv">
+                  <div><b>MF</b><small>POSITION</small></div>
+                  <div><b>14</b><small>競技歴</small></div>
+                  <div><b>C</b><small>副キャプテン</small></div>
+                </div>
+                <div className="biz-mock-tags">
+                  <span>大学サッカー部</span>
+                  <span>IT志望</span>
+                  <span>東京</span>
+                </div>
+                <div className="biz-mock-note">
+                  <CompanyLogo text="AW" color="#1668e3" size={26} radius={6} />
+                  <div>
+                    <b>スカウトを送信</b>
+                    <small>貴社から直接</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

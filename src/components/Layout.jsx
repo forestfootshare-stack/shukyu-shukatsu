@@ -189,6 +189,15 @@ function Footer() {
               <li><Link to="/privacy">プライバシーポリシー</Link></li>
               <li><Link to="/contact">お問い合わせ</Link></li>
             </ul>
+
+            <h4 style={{ marginTop: 26 }}>FOR COMPANIES</h4>
+            <ul>
+              <li>
+                <Link to="/for-companies" className="footer-biz">
+                  採用担当者の方はこちら <ArrowIcon size={13} />
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
