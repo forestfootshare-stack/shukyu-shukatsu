@@ -7,6 +7,7 @@ import { PitchLines, Avatar, Thumb, CompanyLogo, BellIcon, ArrowIcon, LineIcon, 
 import { SectionHead, CompanyCard, InterviewCard, EventCard, SampleBadge, AuthGateModal } from "../components/UI";
 import { openLineModal } from "../components/Layout";
 import Reveal, { RevealGroup } from "../components/Reveal";
+import Marquee from "../components/Marquee";
 
 export default function Home() {
   const { isAuthed } = useApp();
@@ -98,7 +99,7 @@ export default function Home() {
             title="提携サークル・チーム"
             lead="大学の部活動・サークルと連携し、進路情報を蓄積していきます。以下は掲載イメージです。実際の提携団体は順次掲載予定です。"
           /></Reveal>
-          <div className="rail">
+          <Marquee ariaLabel="提携サークル・チーム" speed={26} className="mq-team">
             {teams.map((t, i) => (
               <Reveal key={t.id} delay={i * 60} className="card team-card">
                 <div>
@@ -114,7 +115,7 @@ export default function Home() {
                 </div>
               </Reveal>
             ))}
-          </div>
+          </Marquee>
           <p className="tiny" style={{ marginTop: 14 }}>
             ※ 掲載されている大学・チーム名はすべてサンプルです。実在の団体との提携を示すものではありません。
           </p>
@@ -296,9 +297,12 @@ export default function Home() {
             title="競技経験を評価する企業"
             action={<Link to="/companies" className="btn btn-ghost btn-sm">すべて見る <ArrowIcon /></Link>}
           />
-          <RevealGroup className="grid-3" step={70}>
-            {companies.slice(0, 6).map((c) => <CompanyCard key={c.id} c={c} />)}
-          </RevealGroup>
+          <Marquee ariaLabel="競技経験を評価する企業">
+            {companies.map((c) => <CompanyCard key={c.id} c={c} />)}
+          </Marquee>
+          <p className="tiny" style={{ marginTop: 14 }}>
+            ※ 掲載企業はすべて初版用のサンプルです。カードは横にスワイプできます。
+          </p>
         </div>
       </section>
 
