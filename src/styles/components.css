@@ -504,3 +504,50 @@
   .biz-cta .btn { width: 100%; }
   .biz-mock-note { left: 0; top: calc(100% - 14px); }
 }
+
+/* =================================================================
+   Marquee — 企業カードの自動横スライド
+   ================================================================= */
+.mq {
+  overflow: hidden;
+  cursor: grab;
+  /* 端をフェードさせて、画面外へ自然に流れていくように見せる */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%);
+}
+.mq-drag { cursor: grabbing; }
+.mq-track { display: flex; width: max-content; will-change: transform; }
+.mq-set { display: flex; gap: 20px; padding-right: 20px; }
+
+/* カード1枚の基準幅 */
+.mq-set > * {
+  width: 320px;
+  flex: 0 0 320px;
+  user-select: none;
+}
+/* ドラッグ中はリンクの選択・ドラッグを無効化 */
+.mq img, .mq svg, .mq a { -webkit-user-drag: none; user-drag: none; }
+
+@media (max-width: 900px) {
+  .mq {
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 36px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 36px), transparent 100%);
+  }
+  .mq-set { gap: 14px; padding-right: 14px; }
+  .mq-set > * { width: 288px; flex: 0 0 288px; }
+}
+
+/* 390px以下：画面幅に対して1枚がほぼ収まるサイズにする */
+@media (max-width: 420px) {
+  .mq-set > * { width: calc(100vw - 72px); flex: 0 0 calc(100vw - 72px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 自動再生しない代わりに、手動で横スクロールできるようにする */
+  .mq { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .mq-track { transform: none !important; }
+}
+
+/* スライド内のカードは高さを揃える */
+.mq .co-card { height: 100%; }
+.mq-set > * > .co-card { height: 100%; }
