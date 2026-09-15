@@ -41,6 +41,7 @@ function Header({ onOpenLine }) {
   const firstChar = (user?.name || "").trim().charAt(0);
 
   return (
+    <>
     <header className="header">
       <div className="header-in">
         <Link to="/" aria-label="蹴球就活 トップページ"><Logo /></Link>
@@ -85,8 +86,11 @@ function Header({ onOpenLine }) {
             </>
           ) : (
             <>
-              <Link to="/login" className="btn btn-outline btn-sm desk">ログイン</Link>
-              <Link to="/register" className="btn btn-primary btn-sm desk">新規登録</Link>
+              <Link to="/login" className="btn btn-outline btn-sm hd-login">ログイン</Link>
+              <Link to="/register" className="btn btn-primary btn-sm hd-signup">
+                <span className="hd-long">無料で新規登録</span>
+                <span className="hd-short">無料登録</span>
+              </Link>
             </>
           )}
 
@@ -101,8 +105,20 @@ function Header({ onOpenLine }) {
         </div>
       </div>
 
+      </header>
+
       {drawer && (
         <div className="drawer" id="mobile-drawer">
+          {!isAuthed && (
+            <div className="drawer-top">
+              <Link to="/register" className="btn btn-primary btn-lg btn-block">無料で新規登録</Link>
+              <Link to="/login" className="btn btn-outline btn-block">ログイン</Link>
+              <p className="tiny" style={{ textAlign: "center", marginTop: 2 }}>
+                登録は無料です。1分で完了します。
+              </p>
+            </div>
+          )}
+
           {isAuthed && (
             <div className="row" style={{ gap: 12, paddingBottom: 18, borderBottom: "1px solid var(--line)" }}>
               <Avatar size={46} toneName={profile.photoTone} initial={firstChar} />
@@ -143,8 +159,6 @@ function Header({ onOpenLine }) {
             </>
           ) : (
             <div className="drawer-cta">
-              <Link to="/register" className="btn btn-primary btn-lg">無料でプロフィール登録</Link>
-              <Link to="/login" className="btn btn-outline">ログイン</Link>
               <button className="btn btn-line" onClick={() => { setDrawer(false); onOpenLine(); }}>
                 <LineIcon /> 30分の無料相談を予約する
               </button>
@@ -152,7 +166,7 @@ function Header({ onOpenLine }) {
           )}
         </div>
       )}
-    </header>
+    </>
   );
 }
 
@@ -204,7 +218,7 @@ function Footer() {
       <div className="wrap">
         <div className="footer-bottom">
           <span>運営：FOREST FOOTBALL株式会社</span>
-          <span>© 2026 FOREST FOOTBALL Inc.</span>
+          <span>© 2026 FOREST FOOTBALL Inc. <span className="ver">v5</span></span>
         </div>
       </div>
     </footer>
