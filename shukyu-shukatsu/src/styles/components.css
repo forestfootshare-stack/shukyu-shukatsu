@@ -1,0 +1,553 @@
+/* =================================================================
+   セクション見出し
+   ================================================================= */
+.sec-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 24px; margin-bottom: 34px;
+}
+.sec-head-c { flex-direction: column; align-items: center; text-align: center; }
+.sec-head-c .lead { margin-left: auto; margin-right: auto; }
+@media (max-width: 700px) {
+  .sec-head { flex-direction: column; align-items: stretch; gap: 16px; margin-bottom: 26px; }
+  .sec-head .btn { align-self: flex-start; }
+}
+
+/* =================================================================
+   SAMPLE バッジ
+   ================================================================= */
+.sample-badge {
+  display: inline-flex; align-items: center; height: 18px; padding: 0 6px;
+  border-radius: 3px; font-family: var(--f-num); font-size: 10.5px;
+  font-weight: 600; letter-spacing: .1em;
+  background: var(--ink); color: #fff; line-height: 1; flex-shrink: 0;
+}
+
+/* =================================================================
+   企業カード
+   ================================================================= */
+.co-card { padding: 22px; display: flex; flex-direction: column; gap: 14px; height: 100%; }
+.co-card-top { display: flex; align-items: flex-start; gap: 13px; }
+.co-industry { font-size: 11.5px; color: var(--ink-3); font-weight: 500; }
+.co-name { font-size: 16.5px; line-height: 1.45; }
+.co-tagline { font-size: 13.5px; color: var(--ink-2); line-height: 1.75; }
+
+.co-meta { margin: 0; display: grid; gap: 7px; }
+.co-meta div { display: flex; gap: 10px; font-size: 12.5px; }
+.co-meta dt { color: var(--ink-3); width: 62px; flex-shrink: 0; margin: 0; }
+.co-meta dd { margin: 0; color: var(--ink-2); }
+
+.fav-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--line); background: #fff; color: var(--ink-3);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.fav-btn:hover { color: var(--danger); border-color: var(--danger); }
+.fav-btn.on { color: var(--danger); border-color: #f0c4c0; background: var(--danger-soft); }
+
+/* =================================================================
+   記事・イベントカード
+   ================================================================= */
+.thumb { position: relative; overflow: hidden; width: 100%; }
+.thumb svg { width: 100%; height: 100%; display: block; }
+.thumb-label {
+  position: absolute; left: 12px; bottom: 12px;
+  background: rgba(255,255,255,.94); color: var(--ink);
+  font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+}
+.art-card { overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+.art-body { padding: 18px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+.art-title { font-size: 16px; line-height: 1.55; margin-bottom: 9px; }
+.art-ex { font-size: 13px; color: var(--ink-2); line-height: 1.75; }
+
+/* =================================================================
+   グリッド
+   ================================================================= */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+@media (max-width: 980px) {
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; gap: 14px; }
+}
+
+/* =================================================================
+   パンくず
+   ================================================================= */
+.crumbs {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 6px; font-size: 12.5px; color: var(--ink-3); margin-bottom: 18px;
+}
+.crumbs span { display: inline-flex; align-items: center; gap: 6px; }
+.crumbs a:hover { color: var(--blue); text-decoration: underline; }
+.crumbs svg { opacity: .5; }
+
+/* =================================================================
+   ヒーロー
+   ================================================================= */
+.hero { position: relative; overflow: hidden; background: linear-gradient(170deg, #f2f8ff 0%, #ffffff 62%); }
+.pitch-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero-in {
+  position: relative; display: grid; grid-template-columns: 1.02fr .98fr;
+  gap: 56px; align-items: center; padding: 76px 0 84px;
+}
+.hero-copy h1 {
+  font-size: clamp(29px, 5.6vw, 46px);
+  line-height: 1.35; letter-spacing: -.02em;
+}
+.hero-sub { margin-top: 20px; font-size: 15.5px; color: var(--ink-2); line-height: 1.9; max-width: 30em; }
+.hero-cta { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+.hero-stats {
+  display: flex; gap: 30px; margin-top: 38px;
+  padding-top: 26px; border-top: 1px solid var(--line);
+}
+.hero-stats small { display: block; font-size: 11.5px; color: var(--ink-3); margin-top: 4px; }
+
+/* ヒーロー右：プロフィールカード + スカウト通知の組み合わせ */
+.hero-visual { position: relative; padding: 10px 0 0 34px; }
+.hv-card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: var(--shadow-2); padding: 22px 22px 34px;
+}
+.hv-head { display: flex; gap: 14px; align-items: center; }
+.hv-name { font-size: 17px; line-height: 1.4; }
+.hv-uni { font-size: 12px; color: var(--ink-3); }
+.hv-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: var(--r-sm); overflow: hidden; margin-top: 18px;
+}
+.hv-stats div { background: #fff; padding: 11px 6px; text-align: center; }
+.hv-stats b { font-family: var(--f-num); font-size: 21px; font-weight: 600; display: block; line-height: 1.1; }
+.hv-stats small { font-size: 10px; color: var(--ink-3); }
+.hv-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+
+.hv-scout {
+  position: relative; z-index: 2; width: 282px;
+  margin: -20px 0 0 auto; right: -14px;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--r);
+  box-shadow: var(--shadow-pop); padding: 14px;
+  display: flex; gap: 11px; align-items: flex-start;
+}
+.hv-scout-ic {
+  width: 34px; height: 34px; border-radius: 8px; background: var(--amber-soft);
+  color: #a8641a; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.hv-scout b { font-size: 12.5px; display: block; line-height: 1.5; }
+.hv-scout small { font-size: 11px; color: var(--ink-3); line-height: 1.6; display: block; margin-top: 2px; }
+
+@media (max-width: 940px) {
+  .hero-in { grid-template-columns: 1fr; gap: 40px; padding: 48px 0 60px; }
+  .hero-visual { padding: 0; max-width: 470px; }
+  .hv-scout { right: 0; width: 264px; }
+}
+@media (max-width: 560px) {
+  .hero-in { padding: 36px 0 48px; }
+  .hero-cta { flex-direction: column; }
+  .hero-cta .btn { width: 100%; }
+  .hero-stats { gap: 18px; margin-top: 30px; }
+  .hero-stats .stat-num { font-size: 26px; }
+  .hv-scout { right: auto; width: 100%; margin: -18px 0 0; }
+  .hv-card { padding-bottom: 32px; }
+}
+
+/* =================================================================
+   横スクロールレール（提携チーム）
+   ================================================================= */
+.rail {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 232px;
+  gap: 16px; overflow-x: auto; padding-bottom: 12px;
+  scroll-snap-type: x mandatory; scrollbar-width: thin;
+}
+.rail > * { scroll-snap-align: start; }
+.rail::-webkit-scrollbar { height: 7px; }
+.rail::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 9px; }
+.team-card { overflow: hidden; }
+.team-body { padding: 14px 16px 17px; }
+.team-uni { font-size: 11.5px; color: var(--ink-3); }
+.team-name { font-size: 14.5px; margin: 2px 0 9px; line-height: 1.45; }
+
+/* =================================================================
+   特徴セクション
+   ================================================================= */
+.feat {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
+  align-items: center; padding: 44px 0;
+}
+.feat + .feat { border-top: 1px solid var(--line); }
+.feat-rev .feat-media { order: -1; }
+.feat-n {
+  font-family: var(--f-num); font-size: 13px; font-weight: 600;
+  letter-spacing: .14em; color: var(--blue); display: block; margin-bottom: 8px;
+}
+.feat h3 { font-size: clamp(19px, 3vw, 24px); line-height: 1.5; }
+.feat p { margin-top: 14px; color: var(--ink-2); font-size: 14.5px; line-height: 1.9; }
+@media (max-width: 880px) {
+  .feat { grid-template-columns: 1fr; gap: 26px; padding: 32px 0; }
+  .feat-rev .feat-media { order: 0; }
+}
+
+/* プロフィールUIのミニチュア（写真を置かない図示） */
+.mini-profile {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-2); padding: 20px;
+}
+.mini-row { display: flex; align-items: center; gap: 13px; }
+.mini-tl { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 16px; }
+.mini-tl-item { display: flex; gap: 12px; align-items: flex-start; padding: 7px 0; }
+.mini-tl-dot {
+  width: 9px; height: 9px; border-radius: 50%; background: var(--blue);
+  margin-top: 6px; flex-shrink: 0; position: relative;
+}
+.mini-tl-item:not(:last-child) .mini-tl-dot::after {
+  content: ""; position: absolute; left: 50%; top: 12px;
+  width: 1px; height: 26px; background: var(--line-strong); transform: translateX(-50%);
+}
+.mini-tl-item small { display: block; font-size: 10.5px; color: var(--ink-3); }
+.mini-tl-item b { font-size: 12.5px; font-weight: 500; }
+
+.scout-demo {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--r);
+  padding: 16px; display: flex; gap: 12px; box-shadow: var(--shadow-1);
+}
+.scout-demo + .scout-demo { margin-top: 10px; }
+
+/* =================================================================
+   フィルター（企業一覧）
+   ================================================================= */
+.filters { display: grid; gap: 18px; }
+.search-box { position: relative; }
+.search-box svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--ink-3); }
+.search-box .input { padding-left: 42px; height: 52px; }
+.filter-group + .filter-group { margin-top: 14px; }
+.filter-label { font-size: 12px; font-weight: 700; color: var(--ink-3); margin-bottom: 8px; display: block; }
+
+.list-layout { display: grid; grid-template-columns: 264px 1fr; gap: 32px; align-items: start; }
+.side-panel {
+  position: sticky; top: calc(var(--header-h) + 20px);
+  border: 1px solid var(--line); border-radius: var(--r); padding: 20px; background: #fff;
+}
+@media (max-width: 900px) {
+  .list-layout { grid-template-columns: 1fr; gap: 20px; }
+  .side-panel { position: static; }
+}
+
+/* =================================================================
+   企業詳細
+   ================================================================= */
+.co-hero { border-radius: var(--r-lg); overflow: hidden; border: 1px solid var(--line); }
+.co-hero-band { height: 150px; position: relative; }
+.co-hero-body { padding: 0 26px 26px; background: #fff; }
+.co-hero-logo {
+  position: relative; z-index: 2;
+  margin-top: -34px; border: 4px solid #fff; border-radius: 14px;
+  background: #fff; line-height: 0;
+}
+.co-detail { display: grid; grid-template-columns: 1fr 316px; gap: 32px; align-items: start; margin-top: 32px; }
+.co-sticky { position: sticky; top: calc(var(--header-h) + 20px); }
+.block + .block { margin-top: 34px; }
+.block h3 {
+  font-size: 17px; padding-bottom: 10px; margin-bottom: 14px;
+  border-bottom: 2px solid var(--ink); display: inline-block;
+}
+.block p { font-size: 14.5px; line-height: 1.95; color: var(--ink-2); }
+.pos-item {
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: 16px; display: flex; justify-content: space-between; gap: 14px; align-items: center;
+}
+.pos-item + .pos-item { margin-top: 10px; }
+@media (max-width: 900px) {
+  .co-detail { grid-template-columns: 1fr; }
+  .co-sticky { position: static; }
+  .co-hero-body { padding: 0 18px 22px; }
+  .co-hero-band { height: 110px; }
+}
+
+/* =================================================================
+   プロフィール表示（選手名鑑 × 就活）
+   ================================================================= */
+.pf-hero {
+  background: linear-gradient(150deg, var(--ink) 0%, #1c3c55 100%);
+  color: #fff; border-radius: var(--r-lg); padding: 30px; position: relative; overflow: hidden;
+}
+.pf-hero .pitch-lines { opacity: .35; }
+.pf-hero-in { position: relative; display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+.pf-name { font-size: clamp(23px, 4vw, 31px); color: #fff; line-height: 1.3; }
+.pf-furi { font-size: 12px; color: rgba(255,255,255,.6); }
+.pf-uni { font-size: 13.5px; color: rgba(255,255,255,.82); margin-top: 8px; }
+.pf-kv {
+  display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1px;
+  background: rgba(255,255,255,.16); border-radius: var(--r-sm); overflow: hidden; margin-top: 24px;
+}
+.pf-kv div { background: rgba(255,255,255,.07); padding: 13px 10px; }
+.pf-kv small { display: block; font-size: 10.5px; color: rgba(255,255,255,.6); margin-bottom: 4px; }
+.pf-kv b { font-family: var(--f-num); font-size: 21px; font-weight: 600; color: #fff; line-height: 1.15; }
+.pf-kv .txt { font-family: var(--f-body); font-size: 13.5px; font-weight: 700; }
+
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before {
+  content: ""; position: absolute; left: 7px; top: 10px; bottom: 10px;
+  width: 2px; background: var(--line);
+}
+.tl-item { position: relative; padding: 0 0 26px; }
+.tl-item::before {
+  content: ""; position: absolute; left: -30px; top: 6px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #fff; border: 3px solid var(--blue);
+}
+.tl-item:last-child { padding-bottom: 0; }
+.tl-stage {
+  font-family: var(--f-num); font-size: 12.5px; font-weight: 600;
+  letter-spacing: .1em; color: var(--blue);
+}
+.tl-team { font-size: 15.5px; margin: 2px 0 8px; }
+
+@media (max-width: 640px) {
+  .pf-hero { padding: 22px 18px; }
+  .pf-kv { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =================================================================
+   マイページ
+   ================================================================= */
+.my-layout { display: grid; grid-template-columns: 250px 1fr; gap: 30px; align-items: start; }
+.my-nav { border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; background: #fff; }
+.my-nav a, .my-nav button {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 13px 16px; font-size: 13.5px; font-weight: 500; width: 100%;
+  background: none; border: none; border-bottom: 1px solid var(--line); text-align: left;
+}
+.my-nav a:last-child, .my-nav button:last-child { border-bottom: none; }
+.my-nav a:hover, .my-nav button:hover { background: var(--grey-bg); }
+.my-nav a.on { background: var(--blue-soft); color: var(--blue-dark); font-weight: 700; }
+.my-nav .out { color: var(--danger); }
+
+.welcome-card {
+  background: linear-gradient(140deg, var(--blue) 0%, #2b86f0 100%);
+  color: #fff; border-radius: var(--r-lg); padding: 28px; position: relative; overflow: hidden;
+}
+.welcome-card .pitch-lines { opacity: .28; }
+.welcome-card > * { position: relative; }
+.welcome-card h1 { color: #fff; font-size: clamp(20px, 3.4vw, 26px); }
+.prog-box {
+  background: rgba(255,255,255,.13); border-radius: var(--r);
+  padding: 17px; margin-top: 22px; backdrop-filter: blur(4px);
+}
+.prog-box .progress-track { background: rgba(255,255,255,.25); }
+.prog-box .progress-fill { background: #fff; }
+
+@media (max-width: 860px) {
+  .my-layout { grid-template-columns: 1fr; }
+}
+
+/* =================================================================
+   スカウト
+   ================================================================= */
+.scout-card { padding: 18px 20px; display: flex; gap: 15px; align-items: flex-start; position: relative; }
+.scout-card.unread { border-left: 3px solid var(--amber); background: #fffdf9; }
+.scout-title { font-size: 15px; line-height: 1.55; margin: 5px 0 7px; }
+.scout-ex {
+  font-size: 13px; color: var(--ink-2); line-height: 1.7;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.unread-pill {
+  font-family: var(--f-num); font-size: 10.5px; font-weight: 600; letter-spacing: .08em;
+  background: var(--amber); color: #fff; padding: 2px 7px; border-radius: 3px; line-height: 1.5;
+}
+
+/* =================================================================
+   ステップ（プロフィール登録ウィザード）
+   ================================================================= */
+.steps { display: flex; align-items: center; gap: 0; margin-bottom: 34px; }
+.step { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+.step-n {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-num); font-size: 14px; font-weight: 600;
+  background: var(--white); border: 2px solid var(--line-strong); color: var(--ink-3);
+}
+.step.on .step-n { background: var(--blue); border-color: var(--blue); color: #fff; }
+.step.done .step-n { background: var(--pitch); border-color: var(--pitch); color: #fff; }
+.step-label { font-size: 12.5px; font-weight: 700; color: var(--ink-3); }
+.step.on .step-label { color: var(--blue); }
+.step.done .step-label { color: var(--ink); }
+.step-bar { flex: 1; height: 2px; background: var(--line); min-width: 14px; margin: 0 10px; }
+.step-bar.done { background: var(--pitch); }
+@media (max-width: 680px) {
+  .steps { gap: 0; }
+  .step-label { display: none; }
+  .step-bar { margin: 0 6px; }
+}
+
+.hist-card { border: 1px solid var(--line); border-radius: var(--r); padding: 18px; background: var(--grey-bg); }
+.hist-card + .hist-card { margin-top: 14px; }
+.hist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 560px) { .hist-grid { grid-template-columns: 1fr; } }
+
+/* =================================================================
+   認証ページ
+   ================================================================= */
+.auth-page { background: var(--grey-bg); min-height: calc(100vh - var(--header-h)); padding: 48px 0 80px; }
+.auth-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 38px 36px; box-shadow: var(--shadow-1); }
+@media (max-width: 560px) {
+  .auth-page { padding: 24px 0 60px; background: #fff; }
+  .auth-card { border: none; box-shadow: none; padding: 8px 0 0; }
+}
+
+/* =================================================================
+   静的ページ（規約等）
+   ================================================================= */
+.doc h2 { font-size: 18px; margin: 34px 0 12px; padding-left: 12px; border-left: 4px solid var(--blue); }
+.doc h2:first-child { margin-top: 0; }
+.doc p, .doc li { font-size: 14px; line-height: 1.95; color: var(--ink-2); }
+.doc ul { padding-left: 20px; list-style: disc; }
+.doc li + li { margin-top: 5px; }
+.doc ol { padding-left: 20px; }
+
+/* =================================================================
+   相談ページ
+   ================================================================= */
+.consult-hero {
+  background: linear-gradient(160deg, #e4f7ee 0%, #eef7ff 100%);
+  border-radius: var(--r-lg); padding: 44px; position: relative; overflow: hidden;
+}
+@media (max-width: 600px) { .consult-hero { padding: 28px 20px; } }
+.flow-step {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.flow-step:last-child { border-bottom: none; }
+.flow-num {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--blue-soft); color: var(--blue-dark);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-family: var(--f-num); font-weight: 600; font-size: 15px;
+}
+
+/* =================================================================
+   採用担当者向けバンド（TOPのフッター手前）
+   グレーのカード ＋ 右側に水色系グラデーション
+   ================================================================= */
+.biz-band {
+  display: grid;
+  grid-template-columns: 1fr 372px;
+  background: var(--grey-card);
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 300px;
+}
+.biz-copy { padding: 42px 44px; display: flex; flex-direction: column; justify-content: center; }
+.biz-eyebrow { font-size: 13px; font-weight: 500; color: var(--ink-3); display: block; margin-bottom: 10px; }
+.biz-title { font-size: clamp(20px, 3vw, 27px); line-height: 1.55; letter-spacing: -.01em; }
+
+.biz-feats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin: 28px 0 30px;
+}
+.biz-feats > div { padding-left: 18px; border-left: 1px solid var(--line-strong); }
+.biz-feats b {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 14px; color: var(--blue); margin-bottom: 6px; line-height: 1.4;
+}
+.biz-feats small { font-size: 11.5px; color: var(--ink-2); line-height: 1.7; display: block; }
+
+.biz-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* 右：水色グラデーションの面。写真ではなくUIの合成で表現します。 */
+.biz-visual {
+  position: relative;
+  background: linear-gradient(150deg, #d6ecfb 0%, #7fb9f2 55%, #3d8ee8 100%);
+  display: flex; align-items: center; justify-content: center;
+  padding: 26px 26px 44px;
+  overflow: hidden;
+}
+.biz-visual .pitch-lines { opacity: .5; }
+.biz-mock {
+  position: relative;
+  width: 100%; max-width: 250px;
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 18px 44px rgba(14, 34, 51, .22);
+  padding: 16px;
+}
+.biz-mock-head { display: flex; align-items: center; gap: 10px; }
+.biz-mock-head b { font-size: 13px; line-height: 1.4; }
+.biz-mock-head small { font-size: 10.5px; color: var(--ink-3); display: block; }
+.biz-mock-kv {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: 6px; overflow: hidden; margin-top: 12px;
+}
+.biz-mock-kv div { background: #fff; padding: 8px 4px; text-align: center; }
+.biz-mock-kv b { font-family: var(--f-num); font-size: 16px; font-weight: 600; display: block; line-height: 1.1; }
+.biz-mock-kv small { font-size: 8.5px; color: var(--ink-3); }
+.biz-mock-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 11px; }
+.biz-mock-tags span {
+  font-size: 9.5px; font-weight: 700; padding: 3px 7px; border-radius: 999px;
+  background: var(--blue-soft); color: var(--blue-dark); line-height: 1.4;
+}
+.biz-mock-note {
+  /* カード下端を基準にし、タグ行に重ならないようにする */
+  position: absolute; left: -20px; top: calc(100% - 16px);
+  background: #fff; border-radius: 9px; padding: 9px 12px;
+  box-shadow: 0 10px 28px rgba(14, 34, 51, .2);
+  display: flex; align-items: center; gap: 8px;
+}
+.biz-mock-note b { font-size: 10.5px; line-height: 1.4; }
+.biz-mock-note small { font-size: 9px; color: var(--ink-3); display: block; }
+
+@media (max-width: 900px) {
+  .biz-band { grid-template-columns: 1fr; }
+  .biz-copy { padding: 28px 22px; order: 2; }
+  .biz-visual { order: 1; min-height: 200px; padding: 28px 22px 34px; }
+  .biz-feats { grid-template-columns: 1fr; gap: 14px; margin: 22px 0 24px; }
+  .biz-feats > div { padding-left: 14px; }
+  .biz-cta .btn { width: 100%; }
+  .biz-mock-note { left: 0; top: calc(100% - 14px); }
+}
+
+/* =================================================================
+   Marquee — 企業カードの自動横スライド
+   ================================================================= */
+.mq {
+  overflow: hidden;
+  cursor: grab;
+  /* 端をフェードさせて、画面外へ自然に流れていくように見せる */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%);
+}
+.mq-drag { cursor: grabbing; }
+.mq-track { display: flex; width: max-content; will-change: transform; }
+.mq-set { display: flex; gap: 20px; padding-right: 20px; }
+
+/* カード1枚の基準幅 */
+.mq-set > * {
+  width: 320px;
+  flex: 0 0 320px;
+  user-select: none;
+}
+/* ドラッグ中はリンクの選択・ドラッグを無効化 */
+.mq img, .mq svg, .mq a { -webkit-user-drag: none; user-drag: none; }
+
+@media (max-width: 900px) {
+  .mq {
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 36px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 36px), transparent 100%);
+  }
+  .mq-set { gap: 14px; padding-right: 14px; }
+  .mq-set > * { width: 288px; flex: 0 0 288px; }
+}
+
+/* 390px以下：画面幅に対して1枚がほぼ収まるサイズにする */
+@media (max-width: 420px) {
+  .mq-set > * { width: calc(100vw - 72px); flex: 0 0 calc(100vw - 72px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* 自動再生しない代わりに、手動で横スクロールできるようにする */
+  .mq { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .mq-track { transform: none !important; }
+}
+
+/* スライド内のカードは高さを揃える */
+.mq .co-card { height: 100%; }
+.mq-set > * > .co-card { height: 100%; }
