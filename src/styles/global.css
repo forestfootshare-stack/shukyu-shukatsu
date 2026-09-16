@@ -1,11 +1,11 @@
 :root {
   /* --- Base palette ------------------------------------------------ */
   --white: #ffffff;
-  --ink: #0e2233;          /* 濃紺インク。真っ黒は使わない */
+  --ink: #0b1f33;          /* 濃紺インク。真っ黒は使わない */
   --ink-2: #3d5366;        /* 本文サブ */
   --ink-3: #74889a;        /* キャプション */
 
-  --blue: #1668e3;         /* プライマリ */
+  --blue: #1677ff;         /* プライマリ */
   --blue-dark: #0f4fae;
   --blue-soft: #e8f1fd;    /* 淡いブルー背景 */
   --sky: #d6ecfb;          /* 薄い水色 */
@@ -18,6 +18,15 @@
 
   --grey-bg: #f5f7f9;
   --grey-card: #ecf0f4;   /* 採用担当者向けバンドなど、面で使う少し冷たいグレー */
+
+  /* セクション背景。真っ白の連続を避けるため、ごく薄く色を振ります */
+  --bg-blue: #f5f9ff;
+  --bg-violet: #f8f6ff;
+  --bg-mint: #f2fbf7;
+
+  /* アクセント。見出しの一部だけに使い、面には使いません */
+  --accent-grad: linear-gradient(90deg, #1677ff 0%, #7557ff 55%, #f15bb5 100%);
+  --violet: #7557ff;
   --line: #e2e8ef;
   --line-strong: #cbd6e0;
 
@@ -56,11 +65,11 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: var(--f-head);
+  font-family: var(--f-body);
   line-height: 1.4;
   margin: 0;
   font-weight: 700;
-  letter-spacing: .01em;
+  letter-spacing: -.005em;
 }
 
 p { margin: 0; }
@@ -121,7 +130,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-family: var(--f-num);
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: .16em;
+  letter-spacing: .18em;
   color: var(--blue);
   display: block;
   margin-bottom: 6px;
@@ -469,4 +478,20 @@ ul { margin: 0; padding: 0; list-style: none; }
   .btn-lg { height: 50px; font-size: 15px; }
   .btn { width: auto; }
   .toast { bottom: 84px; }
+}
+
+/* =================================================================
+   セクション背景（白一色を避ける）
+   ================================================================= */
+.sec-blue   { background: var(--bg-blue); }
+.sec-violet { background: var(--bg-violet); }
+.sec-mint   { background: linear-gradient(170deg, var(--bg-mint) 0%, var(--bg-blue) 100%); }
+
+/* 見出しの一部だけに使うアクセント */
+.accent {
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }

@@ -551,3 +551,191 @@
 /* スライド内のカードは高さを揃える */
 .mq .co-card { height: 100%; }
 .mq-set > * > .co-card { height: 100%; }
+
+/* =================================================================
+   ファーストビュー v2 — 縦を詰め、写真ではなくタイポで見せる
+   ================================================================= */
+.hero-v2 {
+  position: relative; overflow: hidden;
+  background: linear-gradient(175deg, #f2f8ff 0%, #f8f6ff 55%, #ffffff 100%);
+}
+.hero-v2-in { position: relative; padding: 72px 0 68px; max-width: 840px; }
+.hero-eyebrow {
+  display: block; font-size: 12.5px; font-weight: 700;
+  letter-spacing: .2em; color: var(--blue); margin-bottom: 18px;
+}
+.hero-v2-title {
+  font-size: clamp(28px, 4.4vw, 46px);
+  line-height: 1.3; letter-spacing: -.02em; font-weight: 800;
+}
+/* 改行位置を画面幅で切り替える（単語の途中で折り返さないため） */
+.hero-v2-title span { display: inline; }
+.hv-l2::after { content: "\A"; white-space: pre; }
+.hero-v2-sub {
+  margin-top: 20px; font-size: clamp(14.5px, 1.4vw, 16px);
+  line-height: 1.8; color: var(--ink-2);
+}
+.hero-v2-cta { display: flex; align-items: center; gap: 22px; margin-top: 32px; flex-wrap: wrap; }
+.hero-v2-sublink {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14.5px; font-weight: 700; color: var(--blue);
+}
+.hero-v2-sublink:hover { text-decoration: underline; }
+.hero-v2-sublink svg { transition: transform 220ms var(--ease); }
+.hero-v2-sublink:hover svg { transform: translateX(3px); }
+
+@media (max-width: 720px) {
+  .hero-v2-in { padding: 44px 0 40px; }
+  .hero-v2-title { font-size: clamp(25px, 7.2vw, 33px); line-height: 1.4; }
+  .hv-l2::after { content: none; }
+  .hv-l1::after { content: "\A"; white-space: pre; }
+  .hero-v2-cta { gap: 16px; margin-top: 26px; }
+  .hero-v2-cta .btn { width: 100%; }
+  .hero-v2-sublink { margin: 0 auto; }
+}
+
+/* =================================================================
+   提携サークル・チーム（写真カード）
+   ================================================================= */
+.team-card-v2 {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 18px; overflow: hidden;
+  box-shadow: var(--shadow-1);
+  transition: transform var(--t-card) var(--ease), box-shadow var(--t-card) var(--ease);
+  height: 100%;
+}
+.team-card-v2:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); }
+.team-photo { aspect-ratio: 16 / 9; overflow: hidden; background: var(--grey-bg); }
+.team-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.team-body-v2 { padding: 15px 17px 18px; }
+.team-name-v2 { font-size: 15.5px; margin: 3px 0 10px; line-height: 1.45; }
+
+/* =================================================================
+   蹴球就活でできること（4カード）
+   ================================================================= */
+.feat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.feat-card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 16px; padding: 24px 22px 26px;
+  position: relative; height: 100%;
+  transition: transform var(--t-card) var(--ease), box-shadow var(--t-card) var(--ease);
+}
+.feat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); }
+.feat-card-ic {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; border-radius: 12px;
+  background: var(--blue-soft); color: var(--blue); margin-bottom: 16px;
+}
+.feat-card-n {
+  position: absolute; top: 22px; right: 22px;
+  font-family: var(--f-num); font-size: 15px; font-weight: 600;
+  letter-spacing: .1em; color: var(--line-strong);
+}
+.feat-card-t { font-size: 15.5px; line-height: 1.5; margin-bottom: 9px; }
+.feat-card-d { font-size: 13px; line-height: 1.8; color: var(--ink-2); }
+
+@media (max-width: 980px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) {
+  /* スマホは横スワイプ */
+  .feat-grid {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78vw;
+    overflow-x: auto; gap: 14px; padding-bottom: 10px;
+    scroll-snap-type: x mandatory; margin: 0 -16px; padding-left: 16px; padding-right: 16px;
+  }
+  .feat-grid > * { scroll-snap-align: start; }
+  .feat-card { padding: 20px 18px 22px; }
+}
+
+/* =================================================================
+   企業カード（TOP・スライド内）
+   ================================================================= */
+.co-card-top { padding: 20px; display: flex; flex-direction: column; height: 100%; }
+.co-card-top .co-more { opacity: 1; transform: none; }
+.card-link.co-card-top:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); border-color: var(--blue); }
+.card-link.co-card-top:hover .co-more svg { transform: translateX(3px); }
+
+.co-note {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; margin-top: 18px; flex-wrap: wrap;
+}
+.co-note-cta {
+  font-size: 12.5px; font-weight: 700; color: var(--blue);
+  background: var(--blue-soft); border-radius: 999px; padding: 7px 16px;
+}
+
+/* =================================================================
+   先輩たちの就活（写真カード3枚）
+   ================================================================= */
+.itv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.itv-card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 18px; overflow: hidden; display: flex; flex-direction: column;
+  height: 100%; box-shadow: var(--shadow-1);
+  transition: transform var(--t-card) var(--ease), box-shadow var(--t-card) var(--ease);
+}
+.itv-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); }
+.itv-photo { aspect-ratio: 16 / 9; overflow: hidden; background: var(--grey-bg); }
+.itv-photo img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 520ms var(--ease);
+}
+.itv-card:hover .itv-photo img { transform: scale(1.04); }
+.itv-body { padding: 18px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+.itv-cat {
+  display: inline-flex; align-self: flex-start;
+  font-size: 11.5px; font-weight: 700; color: var(--blue-dark);
+  background: var(--blue-soft); border-radius: 999px; padding: 4px 11px; margin-bottom: 11px;
+}
+.itv-title { font-size: 15.5px; line-height: 1.6; margin-bottom: 14px; }
+.itv-more {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; color: var(--blue); margin-top: auto;
+}
+.itv-card:hover .itv-more svg { transform: translateX(3px); }
+.itv-more svg { transition: transform 220ms var(--ease); }
+
+@media (max-width: 860px) {
+  .itv-grid {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78vw;
+    overflow-x: auto; gap: 14px; padding-bottom: 10px;
+    scroll-snap-type: x mandatory; margin: 0 -16px; padding-left: 16px; padding-right: 16px;
+  }
+  .itv-grid > * { scroll-snap-align: start; }
+}
+
+/* =================================================================
+   就活無料相談バンド
+   ================================================================= */
+.consult-band {
+  display: grid; grid-template-columns: 1.35fr .65fr; gap: 40px;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 20px; padding: 40px 44px;
+  box-shadow: var(--shadow-1);
+}
+.consult-band-list { display: grid; gap: 12px; align-content: center; }
+.consult-band-list li {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 14px; font-weight: 500;
+}
+.consult-band-list svg { color: var(--pitch); flex-shrink: 0; }
+
+@media (max-width: 860px) {
+  .consult-band { grid-template-columns: 1fr; gap: 26px; padding: 28px 22px; }
+  .consult-band .btn { width: 100%; }
+}
+
+/* =================================================================
+   最終CTA
+   ================================================================= */
+.final-cta {
+  background: var(--ink); color: #fff;
+  position: relative; overflow: hidden; padding: 72px 0;
+}
+.final-cta-btns {
+  display: flex; gap: 12px; justify-content: center; margin-top: 30px; flex-wrap: wrap;
+}
+@media (max-width: 560px) {
+  .final-cta { padding: 52px 0; }
+  .final-cta-btns { flex-direction: column; }
+  .final-cta-btns .btn { width: 100%; }
+}
