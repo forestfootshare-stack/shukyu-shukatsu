@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, useCallback } from "react";
-import { scouts as allScouts } from "../data/content";
+import { reactions as allReactions } from "../data/content";
 
 /* ------------------------------------------------------------------
    初版の認証について
@@ -11,7 +11,7 @@ import { scouts as allScouts } from "../data/content";
    差し替え箇所は signUp / signIn / signOut の3関数に集約してあります。
 ------------------------------------------------------------------- */
 
-const KEY = "shukyu.v1";
+const KEY = "shukyu.v2";
 const AppCtx = createContext(null);
 
 export const DEMO_ACCOUNT = { email: "demo@shukyu-shukatsu.jp", password: "football2026" };
@@ -44,7 +44,7 @@ const demoProfile = {
     "課題を分解して、優先順位をつけて取り組むことを続けてきました。大学2年の時にチームの失点数が課題になった際、練習の時間配分を分析して守備練習を週2回に増やす提案を行い、監督と相談のうえ実行しました。翌シーズンの失点は前年から約3割減りました。\n結果が出ない期間にどう過ごすかが、最終的な差になると考えています。",
   learned:
     "自分の役割は固定ではない、ということです。中学まではFWでしたが、高校でMFに転向し、大学では副キャプテンとしてプレー以外の役割も担いました。求められるものが変わったときに、そこで何ができるかを考え直す習慣がつきました。",
-  scoutOn: true,
+  openToCompanies: true,
 };
 
 const emptyProfile = {
@@ -54,16 +54,16 @@ const emptyProfile = {
   sport: "", position: "", years: "", currentTeam: "",
   history: [], awards: "",
   industries: [], jobTypes: [], locations: [], values: [],
-  pr: "", learned: "", scoutOn: true,
+  pr: "", learned: "", openToCompanies: true,
 };
 
 const initial = {
   user: null,
   profile: emptyProfile,
   profileDone: false,
-  applications: [],
+  consults: [],
   favorites: [],
-  readScouts: [],
+  readReactions: [],
   accounts: [],
 };
 
@@ -115,9 +115,9 @@ export function AppProvider({ children }) {
           gradYear: form.gradYear,
         },
         profileDone: false,
-        applications: [],
+        consults: [],
         favorites: [],
-        readScouts: [],
+        readReactions: [],
       };
     });
     return error;
@@ -131,7 +131,7 @@ export function AppProvider({ children }) {
         user: { name: demoProfile.name, email: e, phone: "09012345678", university: demoProfile.university, gradYear: demoProfile.gradYear },
         profile: demoProfile,
         profileDone: true,
-        applications: s.applications.length ? s.applications : [],
+        consults: s.consults.length ? s.consults : [],
       }));
       return null;
     }
@@ -153,18 +153,20 @@ export function AppProvider({ children }) {
 
   const completeProfile = useCallback(() => patch(() => ({ profileDone: true })), [patch]);
 
-  /* ---------------- 応募・お気に入り・スカウト ---------------- */
+  /* ---------------- 相談・気になる企業・企業からのリアクション ---------------- */
 
-  const apply = useCallback((companyId, positionTitle) => {
+  /* 「この企業について詳しく聞く」を押すと、相談した企業として記録します。
+     企業へ直接応募する導線はありません。 */
+  const requestConsult = useCallback((companyId) => {
     patch((s) => {
-      if (s.applications.some((a) => a.companyId === companyId)) return {};
+      if (s.consults.some((a) => a.companyId === companyId)) return {};
       const d = new Date();
       const date = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
-      return { applications: [{ companyId, positionTitle, date, status: "書類選考中" }, ...s.applications] };
+      return { consults: [{ companyId, date, status: "相談受付中" }, ...s.consults] };
     });
   }, [patch]);
 
-  const hasApplied = useCallback((id) => state.applications.some((a) => a.companyId === id), [state.applications]);
+  const hasConsulted = useCallback((id) => state.consults.some((a) => a.companyId === id), [state.consults]);
 
   const toggleFavorite = useCallback((companyId) => {
     patch((s) => ({
@@ -176,18 +178,18 @@ export function AppProvider({ children }) {
 
   const isFavorite = useCallback((id) => state.favorites.includes(id), [state.favorites]);
 
-  const markScoutRead = useCallback((id) => {
-    patch((s) => (s.readScouts.includes(id) ? {} : { readScouts: [...s.readScouts, id] }));
+  const markReactionRead = useCallback((id) => {
+    patch((s) => (s.readReactions.includes(id) ? {} : { readReactions: [...s.readReactions, id] }));
   }, [patch]);
 
   /* ---------------- 派生値 ---------------- */
 
-  const myScouts = useMemo(
-    () => allScouts.map((s) => ({ ...s, read: s.read || state.readScouts.includes(s.id) })),
-    [state.readScouts]
+  const myReactions = useMemo(
+    () => allReactions.map((s) => ({ ...s, read: s.read || state.readReactions.includes(s.id) })),
+    [state.readReactions]
   );
 
-  const unreadScouts = useMemo(() => myScouts.filter((s) => !s.read).length, [myScouts]);
+  const unreadReactions = useMemo(() => myReactions.filter((s) => !s.read).length, [myReactions]);
 
   // プロフィール完成度 — 10項目の充足率
   const completion = useMemo(() => {
@@ -207,8 +209,8 @@ export function AppProvider({ children }) {
     isAuthed: !!state.user,
     signUp, signIn, signOut,
     updateProfile, completeProfile,
-    apply, hasApplied, toggleFavorite, isFavorite,
-    myScouts, unreadScouts, markScoutRead,
+    requestConsult, hasConsulted, toggleFavorite, isFavorite,
+    myReactions, unreadReactions, markReactionRead,
     completion,
     toast, setToast,
   };
