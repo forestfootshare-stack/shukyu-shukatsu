@@ -10,7 +10,7 @@ import Profile from "./pages/Profile";
 import MyPage from "./pages/MyPage";
 import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
-import { Scouts, ScoutDetail, Applications, Favorites, Settings } from "./pages/MyPages";
+import { Interested, InterestedDetail, Consults, Favorites, Settings } from "./pages/MyPages";
 import { Interviews, InterviewDetail, Events, EventDetail } from "./pages/Content";
 import { About, Consult, Terms, Privacy, Contact, ForCompanies } from "./pages/Static";
 import NotFound from "./pages/NotFound";
@@ -54,9 +54,13 @@ export default function App() {
         <Route path="/profile" element={<Private><Profile /></Private>} />
         <Route path="/profile/setup" element={<Private><ProfileSetup mode="setup" /></Private>} />
         <Route path="/profile/edit" element={<Private><ProfileSetup mode="edit" /></Private>} />
-        <Route path="/scouts" element={<Private><Scouts /></Private>} />
-        <Route path="/scouts/:id" element={<Private><ScoutDetail /></Private>} />
-        <Route path="/applications" element={<Private><Applications /></Private>} />
+        <Route path="/interested" element={<Private><Interested /></Private>} />
+        <Route path="/interested/:id" element={<Private><InterestedDetail /></Private>} />
+        <Route path="/consults" element={<Private><Consults /></Private>} />
+
+        {/* 旧URLからの互換リダイレクト */}
+        <Route path="/scouts" element={<Navigate to="/interested" replace />} />
+        <Route path="/applications" element={<Navigate to="/consults" replace />} />
         <Route path="/favorites" element={<Private><Favorites /></Private>} />
         <Route path="/settings" element={<Private><Settings /></Private>} />
 
