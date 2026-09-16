@@ -1,4 +1,4 @@
-// インタビュー記事 / イベント / 掲載イメージのチーム / スカウト
+// インタビュー記事 / イベント / 掲載イメージのチーム / 企業からのリアクション
 // すべて初版用のサンプルデータです。実在の個人・団体を指すものではありません。
 
 export const INTERVIEW_CATEGORIES = [
@@ -12,6 +12,7 @@ export const INTERVIEW_CATEGORIES = [
 export const interviews = [
   {
     id: "if-001",
+    img: "/images/interview-soccer.jpg",
     category: "サッカー経験者",
     title: "週6の練習と就活を両立させた話。動き出したのは3年の1月だった",
     excerpt:
@@ -41,6 +42,7 @@ export const interviews = [
   },
   {
     id: "if-002",
+    img: "/images/interview-futsal.jpg",
     category: "フットサル経験者",
     title: "サークル中心の学生生活。それでも自信を持って話せるようになるまで",
     excerpt:
@@ -66,6 +68,7 @@ export const interviews = [
   },
   {
     id: "if-003",
+    img: "/images/interview-company.jpg",
     category: "企業インタビュー",
     title: "なぜ競技経験者を採りたいのか。採用担当に直接聞いてみた",
     excerpt:
@@ -171,9 +174,9 @@ export const interviews = [
   {
     id: "if-007",
     category: "就活ノウハウ",
-    title: "スカウトが届く人のプロフィール、届かない人のプロフィール",
+    title: "企業に見てもらえるプロフィール、そうでないプロフィール",
     excerpt:
-      "企業が学生を検索するときに実際に見ている項目と、埋めておくべき欄について。",
+      "企業が学生を探すときに実際に見ている項目と、埋めておくべき欄について。",
     date: "2026年5月27日",
     tone: "green",
     readMin: 6,
@@ -347,59 +350,43 @@ export const getEvent = (id) => events.find((e) => e.id === id);
 // 実際に提携している団体ではありません。
 
 export const teams = [
-  { id: "t1", uni: "SAMPLE 大学", team: "体育会サッカー部", area: "関東", members: "部員 68名", tone: "blue" },
-  { id: "t2", uni: "SAMPLE 大学", team: "フットサル部", area: "関東", members: "部員 34名", tone: "green" },
-  { id: "t3", uni: "SAMPLE 大学", team: "サッカーサークル", area: "関西", members: "所属 52名", tone: "amber" },
-  { id: "t4", uni: "SAMPLE 大学", team: "体育会サッカー部", area: "関西", members: "部員 81名", tone: "navy" },
-  { id: "t5", uni: "SAMPLE 大学", team: "フットサルサークル", area: "東海", members: "所属 40名", tone: "green" },
-  { id: "t6", uni: "SAMPLE 大学", team: "体育会サッカー部", area: "九州", members: "部員 57名", tone: "blue" },
-  { id: "t7", uni: "SAMPLE 大学", team: "女子サッカー部", area: "関東", members: "部員 29名", tone: "amber" },
-  { id: "t8", uni: "SAMPLE 大学", team: "フットサル同好会", area: "北海道", members: "所属 23名", tone: "navy" },
+  { id: "t1", uni: "SAMPLE 大学", team: "体育会サッカー部", sport: "サッカー", area: "関東", img: "/images/circle-01.jpg" },
+  { id: "t2", uni: "SAMPLE 大学", team: "フットサルサークル", sport: "フットサル", area: "関東", img: "/images/circle-02.jpg" },
+  { id: "t3", uni: "SAMPLE 大学", team: "サッカーサークル", sport: "サッカー", area: "関西", img: "/images/circle-03.jpg" },
+  { id: "t4", uni: "SAMPLE 大学", team: "体育会サッカー部", sport: "サッカー", area: "東海", img: "/images/circle-04.jpg" },
+  { id: "t5", uni: "SAMPLE 大学", team: "フットサル部", sport: "フットサル", area: "九州", img: "/images/circle-05.jpg" },
 ];
 
 /* ================================================================== */
-// デモユーザーに届いているスカウト
+// 企業からのリアクション（デモユーザーが受け取っているもの）
+//
+// 蹴球就活は企業が学生へ直接メッセージを送るサービスではありません。
+// 企業は学生プロフィールを見て「興味を伝える」だけで、
+// 自由文のメッセージ欄は持ちません。学生は企業を知るきっかけとして受け取り、
+// 興味があればキャリアアドバイザーに相談します。
 
-export const scouts = [
+export const reactions = [
   {
-    id: "sc-001",
+    id: "rc-001",
     companyId: "meridian-hr",
-    title: "キャプテン経験を拝見しました。一度お話しできませんか",
     date: "2026年9月10日",
     read: false,
-    jobTitle: "キャリアアドバイザー",
-    message: [
-      "はじめまして。メリディアン人材開発の採用担当です。",
-      "プロフィールを拝見し、大学4年間で副キャプテンからキャプテンに役割が変わっていること、そしてその期間にチームの目標を立て直した経験が書かれていた点に関心を持ちました。",
-      "弊社はスポーツ経験者のキャリア支援に特化した人材会社で、社員の約7割が競技経験者です。候補者と同じ目線で話せることが、そのまま仕事の質になる環境です。",
-      "まずは選考ではなく、30分ほどのカジュアル面談からいかがでしょうか。オンラインでも対応できます。ご検討いただけると嬉しいです。",
-    ],
+    // 企業が注目した点。企業が自由に書くのではなく、
+    // プロフィールとの一致点をシステムが提示する形にしています。
+    points: ["副キャプテン経験に注目", "希望業界が一致", "希望勤務地が一致"],
   },
   {
-    id: "sc-002",
+    id: "rc-002",
     companyId: "kokua-health",
-    title: "コンディション管理に関心があれば、ぜひ",
     date: "2026年9月6日",
     read: false,
-    jobTitle: "カスタマーサクセス",
-    message: [
-      "コクア・ヘルスケアの採用担当です。プロフィールを拝見しました。",
-      "競技歴14年という継続の中で、怪我や不調の期間にどう向き合ってきたかを伺ってみたいと思いご連絡しました。",
-      "弊社は大学の部活動向けにコンディション管理アプリを提供しており、導入先のチームと直接やりとりする職種を募集しています。競技経験がそのままユーザー理解につながる仕事です。",
-      "ご興味があれば、まずはオンラインで15分ほどお話しさせてください。",
-    ],
+    points: ["競技歴14年に注目", "スポーツ・ヘルスケア志望が一致"],
   },
   {
-    id: "sc-003",
+    id: "rc-003",
     companyId: "aoba-works",
-    title: "エンジニア職・営業職ともにご案内できます",
     date: "2026年8月29日",
     read: true,
-    jobTitle: "セールス（総合職）",
-    message: [
-      "アオバワークスです。プロフィールを拝見してご連絡しました。",
-      "希望業界にIT・ソフトウェアを挙げていらっしゃったので、弊社の2職種についてご案内します。エンジニア職は未経験からの育成枠があり、営業職は初年度から導入支援に同行します。",
-      "どちらが向いているかも含めて、面談でお話しできればと思います。",
-    ],
+    points: ["IT・ソフトウェア志望が一致", "サッカー経験に注目", "東京勤務希望が一致"],
   },
 ];
